@@ -12,7 +12,7 @@ public class AlarmStatus extends JFrame{
 	private String advisorName[], advisorEmail[];
 	private JLabel labelAdvisorName[], labelAdvisorEmail[];
 	private JCheckBox checkBoxEnable[];
-	private FlowLayout layout1;
+	private GridLayout layout1;
 	private JButton buttonEnable;
 	private JLabel labelEmpty;
 	
@@ -22,8 +22,8 @@ public class AlarmStatus extends JFrame{
 		
 		int index=0, i;
 				
-		layout1=new FlowLayout();
-		layout1.setAlignment(FlowLayout.LEFT);
+		layout1=new GridLayout(10,3,2,2);
+		//layout1.setAlignment(GridLayout.LEFT);
 		setLayout(layout1);
 		
 		//index=0;
@@ -35,16 +35,15 @@ public class AlarmStatus extends JFrame{
 		buttonEnable=new JButton("Enable");
 		
 		try{
-			//input=new Scanner(new File("K:\\UVA\\SWEngg\\AdMan\\src\\info.txt"));
 			input=new Scanner(new File("info.txt"));
 			
 			while(input.hasNext())
 			{
 				//System.out.println("add");
-				advisorName[index]=input.next();
+				advisorName[index]=input.next().trim();
 				//System.out.println(advisorName[index]);
 				
-				advisorEmail[index]=input.next();
+				advisorEmail[index]=input.next().trim();
 				//System.out.println("email "+advisorEmail[index]);
 								
 				index++;
@@ -67,24 +66,24 @@ public class AlarmStatus extends JFrame{
 		for(i=0;i<index;i++){
 			
 			labelAdvisorName[i]=new JLabel("Name: "+advisorName[i]);
-			labelAdvisorName[i].setFont(new Font("Serif",Font.PLAIN,25));
+			labelAdvisorName[i].setFont(new Font("Serif",Font.PLAIN,20));
 			add(labelAdvisorName[i]);
 			
 			labelAdvisorEmail[i]=new JLabel("      Email: "+advisorEmail[i]);
-			labelAdvisorEmail[i].setFont(new Font("Serif",Font.PLAIN,25));
+			labelAdvisorEmail[i].setFont(new Font("Serif",Font.PLAIN,20));
 			add(labelAdvisorEmail[i]);
 			
 			checkBoxEnable[i]=new JCheckBox();
 			add(checkBoxEnable[i]);
 		}
 		
-		labelEmpty=new JLabel("                       ");
+		labelEmpty=new JLabel("                                               ");
 		add(labelEmpty);
 		
-		labelEmpty=new JLabel("                                                                                                                                                                                                                                                                                                                                                ");
+		labelEmpty=new JLabel("                                               ");
 		add(labelEmpty);
 		
-		labelEmpty=new JLabel("                                                                                                                                                                                                                                                                                                                                                ");
+		labelEmpty=new JLabel("                                               ");
 		add(labelEmpty);
 		
 		labelEmpty=new JLabel("                                                                                   ");
