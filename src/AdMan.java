@@ -56,7 +56,7 @@ public class AdMan extends JFrame{
 			public void actionPerformed(ActionEvent event)
 			{
 				alarmStatus=new AlarmStatus();
-				alarmStatus.setSize( 650, 350 ); 
+				alarmStatus.setSize( 650, 250 ); 
 				alarmStatus.setLocationRelativeTo(null);
 				alarmStatus.setVisible( true );
 			}
@@ -88,7 +88,7 @@ public class AdMan extends JFrame{
 			public void actionPerformed(ActionEvent event)
 			{
 				deleteAlarm=new DeleteAlarm();
-				deleteAlarm.setSize( 650, 350 ); 
+				deleteAlarm.setSize( 650, 250 ); 
 				deleteAlarm.setLocationRelativeTo(null);
 				deleteAlarm.setVisible( true );
 			}

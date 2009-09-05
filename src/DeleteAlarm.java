@@ -13,10 +13,14 @@ public class DeleteAlarm extends JFrame{
 	
 	private String advisorName[], advisorEmail[];
 	private JLabel labelAdvisorName[], labelAdvisorEmail[];
+	
 	private JCheckBox checkBoxEnable[];
-	private GridLayout layout1;
+	private GridBagLayout layout1;
+	private GridBagConstraints gbContraints;
+	private Canvas c;
 	private JButton buttonDelete;
 	private JLabel labelEmpty;
+	
 	private int totalNumber;
 	
 	private CheckBoxHandler checkBoxHandler;
@@ -27,9 +31,13 @@ public class DeleteAlarm extends JFrame{
 	{
 		super("Delete Alarm");
 		
-		int index=0, i;
+		int index=0, i, j;
 		
-		layout1=new GridLayout(10,3,2,2);
+		c=new Canvas();
+		c.setSize(10,5);
+		
+		layout1=new GridBagLayout();
+		gbContraints=new GridBagConstraints();
 		setLayout(layout1);
 		
 		//index=0;
@@ -49,15 +57,14 @@ public class DeleteAlarm extends JFrame{
 			
 			while(input.hasNext())
 			{
-				System.out.println("add");
 				advisorName[index]=input.next();
-				System.out.println(advisorName[index]);
+				//System.out.println(advisorName[index]);
 				
 				advisorEmail[index]=input.next();
-				System.out.println("email "+advisorEmail[index]);
+				//System.out.println("email "+advisorEmail[index]);
 								
 				index++;
-				System.out.println("index1: "+index);
+				//System.out.println("index1: "+index);
 			}
 		}
 		catch(Exception e)
@@ -68,40 +75,60 @@ public class DeleteAlarm extends JFrame{
 		System.out.println("index2: "+index);
 		totalNumber=index;
 		
-		for(i=0;i<index;i++){
+		/*for(i=0;i<index;i++){
 			System.out.println("check");
 			System.out.println(advisorName[i]+advisorEmail[i]);
-		}
+		}*/
+		
+		gbContraints.fill=GridBagConstraints.BOTH;
+		gbContraints.anchor=GridBagConstraints.NORTH;
 		
 		i=0;
-		for(i=0;i<index;i++){
-			
+		for(i=0;i<index;i++)
+		{
+			gbContraints.anchor=GridBagConstraints.NORTH;
 			labelAdvisorName[i]=new JLabel("Name: "+advisorName[i]);
 			labelAdvisorName[i].setFont(new Font("Serif",Font.PLAIN,20));
-			add(labelAdvisorName[i]);
+			addComponent(labelAdvisorName[i], i, 0, 1, 1);
 			
-			labelAdvisorEmail[i]=new JLabel("      Email: "+advisorEmail[i]);
+			labelAdvisorEmail[i]=new JLabel("       Email: "+advisorEmail[i]+"              ");
 			labelAdvisorEmail[i].setFont(new Font("Serif",Font.PLAIN,20));
-			add(labelAdvisorEmail[i]);
+			addComponent(labelAdvisorEmail[i], i, 1, 1, 1);
 			
+			gbContraints.anchor=GridBagConstraints.CENTER;
 			checkBoxEnable[i]=new JCheckBox();
-			add(checkBoxEnable[i]);
+			addComponent(checkBoxEnable[i], i, 2, 1, 1);
 			checkBoxEnable[i].addItemListener(checkBoxHandler);
 		}
 		
-		labelEmpty=new JLabel("                                               ");
-		add(labelEmpty);
+		for(j=0;j<2;j++)
+		{
+			labelEmpty=new JLabel("                                              ");
+			addComponent(labelEmpty, i, 0, 1, 1);
+			
+			labelEmpty=new JLabel("                                              ");
+			addComponent(labelEmpty, i, 1, 1, 1);
+			
+			labelEmpty=new JLabel("                                              ");
+			addComponent(labelEmpty, i, 2, 1, 1);
+			
+			i++;
+		}
 		
-		labelEmpty=new JLabel("                                               ");
-		add(labelEmpty);
-		
-		labelEmpty=new JLabel("                                               ");
-		add(labelEmpty);
-		
-		labelEmpty=new JLabel("                                                                                   ");
-		add(labelEmpty);
-		add(buttonDelete);
+		addComponent(buttonDelete, i, 1, 1, 1);
 		buttonDelete.addActionListener(deleteButtonHandler);
+	}
+	
+	private void addComponent(Component c, int row, int col, int width, int height)
+	{
+		gbContraints.gridx=col;
+		gbContraints.gridy=row;
+		
+		gbContraints.gridwidth=width;
+		gbContraints.gridheight=height;
+		
+		layout1.setConstraints(c, gbContraints);
+		add(c);
 	}
 	
 	private class DeleteButtonHandler implements ActionListener
