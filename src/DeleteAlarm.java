@@ -58,13 +58,8 @@ public class DeleteAlarm extends JFrame{
 			while(input.hasNext())
 			{
 				advisorName[index]=input.next();
-				//System.out.println(advisorName[index]);
-				
 				advisorEmail[index]=input.next();
-				//System.out.println("email "+advisorEmail[index]);
-								
 				index++;
-				//System.out.println("index1: "+index);
 			}
 		}
 		catch(Exception e)
@@ -166,15 +161,15 @@ public class DeleteAlarm extends JFrame{
 			}
 			
 			updatedTotalNumber=index;
-			System.out.println("TotalNumber: "+updatedTotalNumber);
+			System.out.println("Updated TotalNumber: "+updatedTotalNumber);
 			
-			output.format("%s %s\n",outAdvisorName[0], outAdvisorEmail[0]);
-			output.close();
+			//output.format("%s %s\n",outAdvisorName[0], outAdvisorEmail[0]);
+			//output.close();
 			
 			try{
 			output=new Formatter("info.txt");} catch(Exception e){}
 			
-			for(i=1;i<updatedTotalNumber;i++)
+			for(i=0;i<updatedTotalNumber;i++)
 			{
 				try
 				{
