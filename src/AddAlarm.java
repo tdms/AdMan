@@ -28,6 +28,7 @@ public class AddAlarm extends JFrame{
 	private String advisorName[], advisorEmail[];
 	private Scanner input;
 	private Formatter output;
+	private File file;
 	
 	public AddAlarm()
 	{
@@ -105,9 +106,11 @@ public class AddAlarm extends JFrame{
 		{
 			int index=0, i;
 			System.out.println("Add Button");
+			file=new File("info.txt");
 			
 			try{
-				input=new Scanner(new File("info.txt"));
+				
+				input=new Scanner(file);
 				
 				advisorName=new String[100];
 				advisorEmail=new String[100];
@@ -124,14 +127,15 @@ public class AddAlarm extends JFrame{
 					index++;
 					System.out.println("index1: "+index);
 				}
+				input.close();
 			}
 			catch(Exception e)
 			{
-				
+				try{
+				file.createNewFile();
+				}catch(Exception e1){}
 			}
-			input.close();
 			
-			//System.out.println(textAreaAdvisorName.getText().trim());
 			try{
 					output=new Formatter("info.txt");
 					for(i=0;i<index;i++)
