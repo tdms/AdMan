@@ -75,6 +75,36 @@ public class AddAlarm extends JFrame{
 		buttonAdd.addActionListener(addHandler);
 		
 	}
+	public boolean verifyEmailAddress(String emailAddress)
+	{
+		
+		
+		int len = emailAddress.length();
+		int i,j;
+		int dotIndex, dotCount=0;
+		int atIndex, atCount = 0;
+		
+		for(i = 0; i < len; i++)
+		{
+			if(emailAddress.charAt(i) == '.')
+			{
+				dotIndex = i;
+				dotCount++;
+			}
+			
+			if(emailAddress.charAt(i) == '@')
+			{
+				atIndex = i;
+				atCount++;				
+			}
+		}
+		
+		if( dotCount >= 1  && atCount == 1)
+			return true;
+		else
+			return false;
+			
+	}
 	
 	private class BrowseButtonHandler implements ActionListener{
 		
@@ -137,10 +167,20 @@ public class AddAlarm extends JFrame{
 			}
 			
 			try{
-					output=new Formatter("info.txt");
-					for(i=0;i<index;i++)
-						output.format("%s %s\n",advisorName[i], advisorEmail[i]);
-					output.format("%s %s\n",textAreaAdvisorName.getText().trim(), textAreaAdvisorEmail.getText().trim());
+					String newAdvisorName = new String(textAreaAdvisorName.getText().trim());
+					String newEmailAddress = new String(textAreaAdvisorEmail.getText().trim());
+					
+					boolean status = verifyEmailAddress(newEmailAddress);
+					
+					if (status == false)
+						JOptionPane.showMessageDialog(null, "Invalid email address");
+					else
+					{
+						output=new Formatter("info.txt");
+						for(i=0;i<index;i++)
+							output.format("%s %s\n",advisorName[i], advisorEmail[i]);
+						output.format("%s %s\n",newAdvisorName , newEmailAddress);
+					}
 			}
 			catch(Exception e)
 			{

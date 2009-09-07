@@ -125,87 +125,110 @@ public class DeleteAlarm extends JFrame{
 		layout1.setConstraints(c, gbContraints);
 		add(c);
 	}
-	
-	private class DeleteButtonHandler implements ActionListener
+	public boolean deleteEntry(String emailAddress)
 	{
-		private int i, j, index, updatedTotalNumber;
-		private Scanner tempInput;
-		private Formatter output;
+		int i, j, index, updatedTotalNumber;
+		Scanner tempInput;
+		Formatter output;
+		boolean entryDeleted = false;
+		String tempAdvisorName[], tempAdvisorEmail[];
+		String outAdvisorName[], outAdvisorEmail[];
 		
-		private String tempAdvisorName[], tempAdvisorEmail[];
-		private String outAdvisorName[], outAdvisorEmail[];
+		output=null;
+		tempInput=null;
 		
-		public void actionPerformed(ActionEvent event)
+		try{
+			output=new Formatter("info.txt");
+		}
+		catch(Exception e)
 		{
-			try{
-				output=new Formatter("info.txt");
+			
+		}
+		System.out.println("TotalNumber: "+totalNumber);
+	
+		index=0;
+		outAdvisorName=new String[100];
+		outAdvisorEmail=new String[100];
+		tempAdvisorName=new String[100];
+		tempAdvisorEmail=new String[100];
+		
+		if(emailAddress != null){
+			for(i=0;i<totalNumber;i++){
+				if(advisorEmail[i].equals(emailAddress))
+				{
+					indexToDelete[i]=1;
+				}
 			}
+		}
+		
+		
+		for(i=0;i<totalNumber;i++){
+			if(indexToDelete[i]==0)
+			{
+				System.out.print(i+" ");
+				outAdvisorName[index]=advisorName[i];		
+				outAdvisorEmail[index]=advisorEmail[i];
+				System.out.println(emailAddress + " " + advisorEmail[i]);
+				
+				index++;					
+			}
+		}
+		
+		if(index != totalNumber)
+			entryDeleted = true;
+		
+		updatedTotalNumber=index;
+		System.out.println("Updated TotalNumber: "+updatedTotalNumber);
+		
+		try{
+		output=new Formatter("info.txt");} catch(Exception e){}
+		
+		for(i=0;i<updatedTotalNumber;i++)
+		{
+			try
+			{
+				tempInput=new Scanner(new File("info.txt"));
+							
+				index=0;
+				while(tempInput.hasNext())
+				{
+					System.out.println("next add");
+					tempAdvisorName[index]=tempInput.next().trim();
+					tempAdvisorEmail[index]=tempInput.next().trim();
+					index++;
+				}
+			}
+			
 			catch(Exception e)
 			{
 				
 			}
-			System.out.println("TotalNumber: "+totalNumber);
-		
-			index=0;
-			outAdvisorName=new String[100];
-			outAdvisorEmail=new String[100];
-			
-			for(i=0;i<totalNumber;i++){
-				if(indexToDelete[i]==0)
-				{
-					System.out.print(i+" ");
-					outAdvisorName[index]=advisorName[i];		
-					outAdvisorEmail[index]=advisorEmail[i];
-					index++;					
-				}
-			}
-			
-			updatedTotalNumber=index;
-			System.out.println("Updated TotalNumber: "+updatedTotalNumber);
-			
-			//output.format("%s %s\n",outAdvisorName[0], outAdvisorEmail[0]);
-			//output.close();
+				
+			tempInput.close();
 			
 			try{
-			output=new Formatter("info.txt");} catch(Exception e){}
-			
-			for(i=0;i<updatedTotalNumber;i++)
-			{
-				try
-				{
-					tempInput=new Scanner(new File("info.txt"));
-								
-					index=0;
-					while(tempInput.hasNext())
-					{
-						System.out.println("next add");
-						tempAdvisorName[index]=tempInput.next().trim();
-						tempAdvisorEmail[index]=tempInput.next().trim();
-						index++;
-					}
-				}
+				//output=new Formatter("info.txt");
 				
-				catch(Exception e)
-				{
-					
-				}
-					
-				tempInput.close();
+				for(j=0;j<index;j++)
+					output.format("%s %s\n",tempAdvisorName[j], tempAdvisorEmail[j]);
 				
-				try{
-					//output=new Formatter("info.txt");
-					
-					for(j=0;j<index;j++)
-						output.format("%s %s\n",tempAdvisorName[j], tempAdvisorEmail[j]);
-					
-					output.format("%s %s\n", outAdvisorName[i], outAdvisorEmail[i]);
-				}
-				catch(Exception e)
-				{
-				
-				}		
+				output.format("%s %s\n", outAdvisorName[i], outAdvisorEmail[i]);
 			}
-			output.close();
+			catch(Exception e)
+			{
+			
+			}		
+		}
+		output.close();
+		return entryDeleted;
+		
+	}
+	
+	private class DeleteButtonHandler implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			deleteEntry(null);
 		}
 	}
 	
