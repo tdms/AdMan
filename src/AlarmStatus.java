@@ -91,13 +91,13 @@ public class AlarmStatus extends JFrame{
 		
 		for(j=0;j<2;j++)
 		{
-			labelEmpty=new JLabel("                                              ");
+			labelEmpty=new JLabel("              ");
 			addComponent(labelEmpty, i, 0, 1, 1);
 			
-			labelEmpty=new JLabel("                                              ");
+			labelEmpty=new JLabel("              ");
 			addComponent(labelEmpty, i, 1, 1, 1);
 			
-			labelEmpty=new JLabel("                                              ");
+			labelEmpty=new JLabel("               ");
 			addComponent(labelEmpty, i, 2, 1, 1);
 			
 			i++;

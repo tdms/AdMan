@@ -16,10 +16,10 @@ public class AddAlarmTest {
 	public void testVerifyEmailAddress() {
 		//fail("Not yet implemented");
 		AddAlarm addAlarm = new AddAlarm();
-		boolean stat = addAlarm.verifyEmailAddress("abc@d.e");
+		boolean stat = addAlarm.verifyEmailAddress("abc@de.f");
 		System.out.println(stat);
 		
-		assertEquals("Result",true,addAlarm.verifyEmailAddress("abc@de"));
+		assertEquals("Result",true,stat);
 		
 		
 	}

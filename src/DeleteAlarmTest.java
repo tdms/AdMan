@@ -51,7 +51,7 @@ public class DeleteAlarmTest {
 	public void testDeleteEntry() {
 		//fail("Not yet implemented");
 		
-		String emailAddress = new String("abc@def.ghi");
+		String emailAddress = new String("whitehouse@cs.virginia.edu");
 		DeleteAlarm deleteAlarm = new DeleteAlarm();
 		boolean programStatus = deleteAlarm.deleteEntry(emailAddress);
 		System.out.println(programStatus);
