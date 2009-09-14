@@ -15,6 +15,8 @@ public class Controller {
 		adMan.setLocationRelativeTo(null);
 		adMan.setVisible( true );
 		
+		new MailFetcher();
+		
 		//new MainController();
 	}
 }
