@@ -3,5 +3,18 @@
 	<classpathentry kind="lib" path="K:/Downloads/junit-4.7.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="K:/Downloads/activation.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/mail.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/jsapi.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/freetts.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/freetts-jsapi10.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/MixedVoices.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/cmudict04.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/cmulex.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/en_us.jar"/>
+	<classpathentry kind="lib" path="K:/Downloads/mbrola.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
