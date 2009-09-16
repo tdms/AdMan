@@ -16,7 +16,7 @@ public class AddAlarmTest {
 	public void testVerifyEmailAddress() {
 		//fail("Not yet implemented");
 		AddAlarm addAlarm = new AddAlarm();
-		boolean stat = addAlarm.verifyEmailAddress("abc@de.f");
+		boolean stat = addAlarm.verifyEmailAddress("abc@def");
 		System.out.println(stat);
 		
 		assertEquals("Result",true,stat);

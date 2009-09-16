@@ -13,9 +13,9 @@ public class AddAlarm extends JFrame{
 	
 	private JLabel labelEmpty;
 	private JLabel labelAdvisorName;
-	private JTextArea textAreaAdvisorName;
+	private JTextField textFieldAdvisorName;
 	private JLabel labelAdvisorEmail;
-	private JTextArea textAreaAdvisorEmail;
+	private JTextField textFieldAdvisorEmail;
 	private JButton buttonAdd, buttonSelectAlarm;
 	
 	private JLabel labelSelectAlarm;
@@ -51,14 +51,14 @@ public class AddAlarm extends JFrame{
 		labelAdvisorName=new JLabel("                  Advisor's Name:");
 		add(labelAdvisorName);
 		
-		textAreaAdvisorName=new JTextArea(1, 20);
-		add(textAreaAdvisorName);
+		textFieldAdvisorName=new JTextField(20);
+		add(textFieldAdvisorName);
 		
 		labelAdvisorEmail=new JLabel("Advisor's E-mail address: ");
 		add(labelAdvisorEmail);
 		
-		textAreaAdvisorEmail=new JTextArea(1, 20);
-		add(textAreaAdvisorEmail);
+		textFieldAdvisorEmail=new JTextField(20);
+		add(textFieldAdvisorEmail);
 		
 		labelSelectAlarm=new JLabel("Select Alarm Tone: ");
 		add(labelSelectAlarm);
@@ -73,8 +73,8 @@ public class AddAlarm extends JFrame{
 		add(buttonAdd);
 		addHandler=new AddButtonHandler();
 		buttonAdd.addActionListener(addHandler);
-		
 	}
+	
 	public boolean verifyEmailAddress(String emailAddress)
 	{
 		
@@ -167,8 +167,8 @@ public class AddAlarm extends JFrame{
 			}
 			
 			try{
-					String newAdvisorName = new String(textAreaAdvisorName.getText().trim());
-					String newEmailAddress = new String(textAreaAdvisorEmail.getText().trim());
+					String newAdvisorName = new String(textFieldAdvisorName.getText().trim());
+					String newEmailAddress = new String(textFieldAdvisorEmail.getText().trim());
 					
 					boolean status = verifyEmailAddress(newEmailAddress);
 					

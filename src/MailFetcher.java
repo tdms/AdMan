@@ -1,19 +1,67 @@
 
 import java.util.*;
 import java.io.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.mail.*;
 import javax.mail.event.*;
 import javax.mail.internet.*;
 import javax.activation.*;
 
+class ShowMail extends JFrame{
+	
+	private JTextArea mailBody;
+    private JScrollPane scroll1;
+    private JButton readButton;
+    private Box box;
+    private ListenButtonHandler listenButtonHandler;
+    private String mailActualcontent;
+    
+    ShowMail(String mailContent)
+    {
+    
+    	super("New Mail");
+    	box = Box.createHorizontalBox();
+    	
+    	       
+    	mailBody=new JTextArea(mailContent,25,100);
+    	mailBody.setLineWrap(true);
+    	mailBody.setWrapStyleWord(true);
+    	
+    	scroll1 = new JScrollPane(mailBody);
+    	box.add(scroll1);
+    	
+    	readButton=new JButton("Listen");
+    	box.add(readButton);
+    	
+    	listenButtonHandler=new ListenButtonHandler();
+    	readButton.addActionListener(listenButtonHandler);
+    	
+    	add(box);
+    	mailActualcontent = mailContent;
+    }
+    
+    private class ListenButtonHandler implements ActionListener{
+    	
+		public void actionPerformed(ActionEvent event)
+		{
+			T2SConverter t2s = new T2SConverter();
+			t2s.speak(mailActualcontent);
+		}
+    }
+}
 
-public class MailFetcher {
-    static String protocol = "imaps";
+public class MailFetcher{
+    private String protocol = "imaps";
     static String host = "imap.gmail.com";
-    static String user = "munir66";
-    static String password = "dhanmondi2";
-    static String advisorEmailAddr[] = {"munir@cs.virginia.edu", "munircse@yahoo.com"};
+    static String user = null;
+    static String password = null;
+    private String advisorEmail[];
+    private int advisorEmailLength;
+    
+    private int index;
     
     static String mbox = null;
     static String url = null;
@@ -30,13 +78,32 @@ public class MailFetcher {
     static String mailSendDate = null;
     static String mailFlags = null;
     static String mailContent = null;
-
-
     
-    MailFetcher()
-    {     	
-    	int msgnum = -1;
-        	
+    private Folder folder = null;
+    private Store store = null;
+   	int msgnum = -1;
+   	private String alreadyNotifiedList = "a";
+
+    private Scanner input;
+    private ShowMail showMail;
+    private String totalMsg;
+    
+    MailFetcher(String userID, String password1)
+    {    
+       	System.out.println("In mailfetcher"+userID+password1);
+    	
+    	user=userID;
+    	password=password1;
+    	
+    	
+		init();
+    }
+    
+    void init()
+    {
+       	
+        totalMsg=new String();
+        
     	InputStream msgStream = System.in;
     	
 	    // Get a Properties object
@@ -44,8 +111,6 @@ public class MailFetcher {
 
 	    // Get a Session object
 	    Session session = Session.getInstance(props, null);
-	    Folder folder = null;
-	    Store store = null;
 	    try{
 		    try{
 		    	
@@ -67,18 +132,50 @@ public class MailFetcher {
 		    
 		    if (mbox == null)
 				mbox = "INBOX";
+		    
 	        folder = folder.getFolder(mbox);
+			folder.open(Folder.READ_ONLY);
+
 		    if (folder == null)
 		    {
 		    	System.out.println("Invalid folder");
 		    	System.exit(1);
 		    }
-		    
-		    int totalMessages = 0;
+	    }
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
+	    
+	    //checkMail();
+    }
+	void checkMail()
+	{
+		advisorEmail=new String[100];
+		index=0;
+		
+    	try{
+			input=new Scanner(new File("enable.txt"));
+			
+			while(input.hasNext())
+			{
+				advisorEmail[index]=input.next();
+				index++;
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		advisorEmailLength=index;
+		
+		
+		try{
+		   int totalMessages = 0;
 		    
 		    try {
 				//folder.open(Folder.READ_WRITE);
-				folder.open(Folder.READ_ONLY);
+				//folder.open(Folder.READ_ONLY);
 				totalMessages = folder.getMessageCount();
 				System.out.println("Total messages: " + totalMessages);
 		
@@ -111,6 +208,7 @@ public class MailFetcher {
 			if(startingIndex < 0)
 				startingIndex = 0;
 	
+			//actual message printing
 			for (int i = startingIndex; i < msgs.length; i++) {
 			    System.out.println("--------------------------");
 			    System.out.println("MESSAGE #" + (i + 1) + ":");
@@ -125,14 +223,32 @@ public class MailFetcher {
 			    System.out.println("=======================================\n");
 			    System.out.println(mailContent);
 			    System.out.println("=======================================\n");
+			   
+			    System.out.println("Advisor email length:" + advisorEmailLength);
 			    
-			    for(int j = 0; j < advisorEmailAddr.length; j ++)
+			    for(int j = 0; j < advisorEmailLength; j ++)
 			    {
-			    	if (mailFrom.contains(advisorEmailAddr[j]))
+			    	if (mailFrom.contains(advisorEmail[j]) && alreadyNotifiedList!= null && !alreadyNotifiedList.contains(mailFrom+mailSubject+mailSendDate)){
+			    		
+			    		alreadyNotifiedList = alreadyNotifiedList + mailFrom + mailSubject + mailSendDate;
+			    		
 			    		System.out.println("********NOTIFY NOW !!!!******************");
+
+					    totalMsg="";
+					    totalMsg+="FROM: " + mailFrom+"."+"\n";
+					    totalMsg+="SUBJECT: " + mailSubject+ "." + "\n";
+					    totalMsg+="DATE: " + mailSendDate + "." + "\n";
+					    totalMsg+="BODY: \n" + mailContent+"\n";
+
+					    showMail=new ShowMail(totalMsg);
+					    showMail.setSize( 400, 300 ); 
+					    showMail.setLocationRelativeTo(null);
+					    showMail.setVisible( true );
+
+			    	}
 			    }
 			    
-			    		
+			    
 			    
 			}
 		    } else {
@@ -148,20 +264,20 @@ public class MailFetcher {
 			    System.out.println("DATE:" + mailSendDate);
 			    System.out.println("FLAGS: " + mailFlags);
 			    System.out.println("BODY: " + mailContent);
-			    
-			    		
-			    		
+			    		    		
 			} catch (IndexOutOfBoundsException iex) {
 			    System.out.println("Message number out of range");
 			}
 		    }
-	
-		    folder.close(false);
-		    store.close();
+		    
+						
+		    //folder.close(false);
+		    //store.close();
 	    }
 	    catch(Exception e)
 	    {
 	    	System.out.println("Exception caught.");
+	    	e.printStackTrace();
 	    }
 	    
 		    

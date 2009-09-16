@@ -26,7 +26,7 @@ public class T2SConverter {
         helloVoice = voices[0];
         */
         
-        helloVoice = voiceManager.getVoice("kevin16");
+        helloVoice = voiceManager.getVoice("kevin");
 
         if (helloVoice == null) {
             System.err.println("Cannot find this voice. Please specify a different voice.");
@@ -36,7 +36,7 @@ public class T2SConverter {
         /* Allocates the resources for the voice.
          */
         helloVoice.allocate();
-        speak("hello university of virginia.");
+        //speak("hello tanima and taniya. enamul is eating and nirjon is sleeping.");
 	} 
 	
 	public void speak(String s)
